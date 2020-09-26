@@ -147,6 +147,7 @@ def next_state2(A, r, c):
           changed = True
         else:
           N[j,k] = DEAD
+    print()
   return N, changed
 
 #############################################
@@ -179,7 +180,12 @@ def num_nbrs2(A,j,k,r,c):
     if j==0 and k<c-1 and A[r-1, k+1] == ALIVE:
       B[r-1, k+1] = 1
       num += 1 #at top row, right
+
+    if j==0 and k>0 and A[r-1, k-1] == ALIVE: numtop += 1 #at top row, left
+    if j==0 and A[r-1, k] == ALIVE: numtop += 1 #at top row, middle
+    if j==0 and k<c-1 and A[r-1, k+1] == ALIVE: numtop += 1 #at top row, right
     
+
   if j==r-1:
     
     if j==r-1 and k>0 and A[0, k-1] == ALIVE:
@@ -192,6 +198,12 @@ def num_nbrs2(A,j,k,r,c):
       B[0, k+1] = 1
       num += 1 #at bottom row , right
     
+    if j==r-1 and k>0 and A[0, k-1] == ALIVE: numbot += 1 #at bottom row , left
+    if j==r-1 and A[0, k] == ALIVE: numbot += 1 #at bottom row, middle
+    if j==r-1 and k<c-1 and A[0, k+1] == ALIVE: numbot += 1 #at bottom row , right
+    
+
+  
   
   if j>0   and k>0   and A[j-1, k-1] == ALIVE:
     B[j-1, k-1] = 1
@@ -217,6 +229,14 @@ def num_nbrs2(A,j,k,r,c):
   if j<r-1 and k<c-1 and A[j+1, k+1] == ALIVE:
     B[j+1, k+1] = 1
     num += 1
+
+  #print("check top row with bottom: ", numtop)
+  #print("check bottom row with top:", numbot)
+  print("For: ", j, " ", k)
+  for m in range(r):
+    print(B[m])
+  print()
+
 
   return num
 #############################################
@@ -227,25 +247,9 @@ Provide your code for the function
 next_state_torus here and delete the raise 
 error statement:
 """
-def next_state_torus(A, r, c):
-  N = np.zeros((r,c), dtype=np.int8)
-  changed = False
-  for j in range(r):
-    for k in range(c):
-      num = num_nbrs_torus(A,j,k,r,c)
-      if A[j,k] == ALIVE: 
-        if num > 1 and num < 4: 
-          N[j,k] = ALIVE
-        else:
-          N[j,k] = DEAD 
-          changed = True
-      else:               
-        if num == 3:
-          N[j,k] = ALIVE
-          changed = True
-        else:
-          N[j,k] = DEAD
-  return N, changed
+def next_state_torus():
+
+  raise NotImplementedError()
 #############################################
 
 #############################################
@@ -254,102 +258,10 @@ Provide your code for the function
 num_nbrs_torus here and delete the raise 
 error statement:
 """
-def num_nbrs_torus(A,j,k,r,c):
-  num = 0
-  numtop = 0
-  numbot = 0
-  B = np.zeros((r,c), dtype=np.int8)
-  B[j,k] = 2
-  if j==0:
-    
-    if j==0 and k>0 and A[r-1, k-1] == ALIVE:
-      B[r-1, k-1] = 1
-      num += 1 #at top row, left
-    if j==0 and A[r-1, k] == ALIVE:
-      B[r-1, k] = 1
-      num += 1 #at top row, middle
-    if j==0 and k<c-1 and A[r-1, k+1] == ALIVE:
-      B[r-1, k+1] = 1
-      num += 1 #at top row, right
-    
-  if j==r-1:
-    
-    if j==r-1 and k>0 and A[0, k-1] == ALIVE:
-      B[0, k-1] = 1
-      num += 1 #at bottom row , left  
-    if j==r-1 and A[0, k] == ALIVE:
-      B[0, k] = 1
-      num += 1 #at bottom row, middle
-    if j==r-1 and k<c-1 and A[0, k+1] == ALIVE:
-      B[0, k+1] = 1
-      num += 1 #at bottom row , right
+def num_nbrs_torus():
 
-  if k==0:
-    if j>0 and k==0 and A[j-1, c-1] == ALIVE:
-      B[j-1, c-1] = 1
-      num += 1 #at left col, top
-    if k==0 and A[j, c-1] == ALIVE:
-      B[j, c-1] = 1
-      num += 1 #at left col, middle
-    if j<r-1 and k==0 and A[j+1, c-1] == ALIVE:
-      B[j+1, c-1] = 1
-      num += 1 #at left col, bottom
-    
-  if k==c-1:
-    if j>0 and k==c-1 and A[j-1, 0] == ALIVE:
-      B[j-1, 0] = 1
-      num += 1 #at right col, top
-    if k==c-1 and A[j, 0] == ALIVE:
-      B[j, 0] = 1
-      num += 1 #at right col, middle
-    if j<r-1 and k==c-1 and A[j+1, 0] == ALIVE:
-      B[j+1, 0] = 1
-      num += 1 #at right col, bottom
 
-  if j==0 and k==0 and A[r-1, c-1] == ALIVE:
-      B[r-1, c-1] = 1
-      num += 1 #at top left, opposite corner
-
-  if j==0 and k==c-1 and A[r-1, 0] == ALIVE:
-      B[r-1, 0] = 1
-      num += 1 #at top right, opposite corner
-
-  if j==r-1 and k==0 and A[0, c-1] == ALIVE:
-      B[0, c-1] = 1
-      num += 1 #at bottom left, opposite corner
-
-  if j==r-1 and k==c-1 and A[0, 0] == ALIVE:
-      B[0, 0] = 1
-      num += 1 #at bottom right, opposite corner
-  
-    
-  
-  if j>0   and k>0   and A[j-1, k-1] == ALIVE:
-    B[j-1, k-1] = 1
-    num += 1
-  if j>0             and A[j-1, k  ] == ALIVE:
-    B[j-1, k] = 1
-    num += 1
-  if j>0   and k<c-1 and A[j-1, k+1] == ALIVE:
-    B[j-1, k+1] = 1
-    num += 1
-  if           k>0   and A[j  , k-1] == ALIVE:
-    B[j  , k-1] = 1
-    num += 1
-  if           k<c-1 and A[j  , k+1] == ALIVE:
-    B[j  , k+1] = 1
-    num += 1
-  if j<r-1 and k>0   and A[j+1, k-1] == ALIVE:
-    B[j+1, k-1] = 1
-    num += 1
-  if j<r-1           and A[j+1, k  ] == ALIVE:
-    B[j+1, k ] = 1
-    num += 1
-  if j<r-1 and k<c-1 and A[j+1, k+1] == ALIVE:
-    B[j+1, k+1] = 1
-    num += 1
-
-  return num
+  raise NotImplementedError()
 #############################################
 
 """
@@ -374,11 +286,11 @@ def interact(max_itn):
   print("at ", A[4,1])
   while itn <= max_itn:
     sleep(pause)
-    newA, delta = next_state_torus(A, r, c)
+    newA, delta = next_state(A, r, c)
     if not delta:  break
     itn += 1
     A = newA
     print_array(A, r, c)
   print('\niterations', itn)
 
-interact(9999)
+interact(10)
