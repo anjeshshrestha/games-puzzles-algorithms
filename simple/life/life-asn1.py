@@ -16,17 +16,35 @@ import numpy as np
 * Delete the names and ccids below, and put
 # the names and ccids of all members of your group, including you. 
 # name                         ccid
-Daniel Levy                   danlevy
-Sarah Levy                    sarlevy
+Anjesh Shrestha                anjesh
+Andrew Rosario                 rosario2
+Areez Ladhani                  areez
+Shawna Dawson	               sndawson
+Yourui Dong                    ydong
 
 #############################################
 # Your answer to question 1-a:
+a glider with 5 live cells in a 3x3 grid. ex:
+* . .
+. * *
+* * .
+
+the simulation will move diagonally during its lifetime
+in 4 itteration to return to it original image
+however shifted 1 space to the right and 1 down
 
 #############################################
 # Your answer to question 1-b:
+Gosper glider gun which fires gliders forever
+no 2 glider interact with one another on an unbounded grid
+Also a "dirty" puffer train that leaves being debris
 
 #############################################
 # Your answer to question 2:
+In life.py adds columns and rows when needed to form an "infinite" grid
+also uses a string to for data structure in row major order
+
+life-np.py
 
 #############################################
 # Follow the assignment 1 instructions and
@@ -34,6 +52,13 @@ Sarah Levy                    sarlevy
 # Then come back and fill in the answer to
 # question 3-c:
 
+.......**.....
+.......*......
+..............
+..............
+......*.*.....
+
+iterations 193
 #############################################
 """
 """
