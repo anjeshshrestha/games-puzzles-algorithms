@@ -407,19 +407,11 @@ def interact(max_itn):
     itn += 1
     A = newA
     print_array(A, r, c)
-    while itn <= max_itn:
-        sleep(pause)
-        newA, delta = next_state(A, r, c)
-        if not delta:
-            break
-        itn += 1
-        A = newA
-        print_array(A, r, c)
     print('\niterations', itn)
 
 
 def main():
-    interact(99)
+    interact(192)
 
 if __name__ == '__main__':
     main()
