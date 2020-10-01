@@ -24,27 +24,65 @@ Yourui Dong                    ydong
 
 #############################################
 # Your answer to question 1-a:
-a glider with 5 live cells in a 3x3 grid. ex:
+2 gliders, going in opposite directions
+
+. * *
+* * .
+. . *
+. . .
+. . .
 * . .
 . * *
 * * .
 
 the simulation will move diagonally during its lifetime
 in 4 itteration to return to it original image
-however shifted 1 space to the right and 1 down
 
 #############################################
 # Your answer to question 1-b:
 Gosper glider gun which fires gliders forever
 no 2 glider interact with one another on an unbounded grid
+and the number of cells alive will always increase
+because new gliders are being created
 Also a "dirty" puffer train that leaves being debris
+
+this is another unbounded growth pattern
+that leaves behind 
+* * * . *
+* . . . .
+. . . * *
+. * * . *
+* . * . *
 
 #############################################
 # Your answer to question 2:
-In life.py adds columns and rows when needed to form an "infinite" grid
-also uses a string to for data structure in row major order
+In life.py uses a string for it's data structure in row major order
 
-life-np.py
+life-np.py uses an 2 dimensional matrix created with numpy 
+
+what happened to num_nbrs in life-np.py:
+    it is a part of the next_state function
+    because there is no need for guard cells
+
+how an infinite grid is implemented in life.py:
+    it is implemented by the addition of guard cells
+    when an alive cell is next to a guard cell.
+    more row/coloumn is added to the side by the function pad
+    before every itteration, pad checks for cells alive
+    near the edges/guard cells.
+    for the first or last unguarded row, which is the easiest
+    due to the data structure being in row-major order
+    increace the rows by 1
+    for frist and last unguarded columns, which is much harder
+    add a dead cell to each column at the end 
+    or the begening after the guard cell
+    
+how the use of a guarded board simplifies num_nbrs.
+    having a guarded border simplifies num_nbrs
+    because it will not break the search for neighbours
+    by looking at the next row or previous row
+    if there were no guard cells, there would have to be 
+    different type of checks in place
 
 #############################################
 # Follow the assignment 1 instructions and
@@ -52,13 +90,21 @@ life-np.py
 # Then come back and fill in the answer to
 # question 3-c:
 
+Anjesh: 33
+Andrew: 50
+Areez: 08
+Shawna: 74
+Yourui: 27
+Total = 192
+
+After iterations 192
 ......***.....
 ..............
 ..............
 .......*......
 ........*.....
 
-iterations 193
+
 #############################################
 """
 """
@@ -310,8 +356,8 @@ def num_nbrs_torus(A,j,k,r,c):
   numbot = 0
   B = np.zeros((r,c), dtype=np.int8)
   B[j,k] = 2
+  
   if j==0:
-    
     if j==0 and k>0 and A[r-1, k-1] == ALIVE:
       B[r-1, k-1] = 1
       num += 1 #at top row, left
@@ -323,7 +369,6 @@ def num_nbrs_torus(A,j,k,r,c):
       num += 1 #at top row, right
     
   if j==r-1:
-    
     if j==r-1 and k>0 and A[0, k-1] == ALIVE:
       B[0, k-1] = 1
       num += 1 #at bottom row , left  
