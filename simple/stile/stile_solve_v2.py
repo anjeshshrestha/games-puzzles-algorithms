@@ -79,10 +79,22 @@ class Board:
                     m_sum += abs(i - (self.board[i][j]-1) // h) + abs(j - (self.board[i][j]-1) % w)
                 else:
                     m_sum += abs(i - (h-1)) + abs(j - (w-1))
-                    
+        print(m_sum)
         return m_sum
     
-    
+    def emtg(self):
+        m_sum = 0
+        h = len(self.board)
+        w = len(self.board[0])
+
+        counter = 1
+        for i in range(len(self.board)):
+            for j in range(len(self.board[i])):
+                if self.board[i][j] != 0 and self.board[i][j] != counter:
+                    m_sum += 1
+                counter += 1
+                    
+        return m_sum
     #gets the solution board
     def get_solution(self):
         if self.solution:
@@ -331,9 +343,9 @@ def search(path, g, bound):
 # In[64]:
 
 
-b = get_board_from_file('st.25.0.txt')
+b = get_board_from_file('test.txt')
 print(b)
-
+print(b.manhattan())
 print("Is solvable?", b.is_solvable())
 if (b.is_solvable()):
     #ida_star(b)

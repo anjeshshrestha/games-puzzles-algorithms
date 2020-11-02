@@ -10,8 +10,9 @@ class Tile:
     self.rows, self.cols = r, c
     assert(self.rows>=2 and self.cols>=2)
     self.state = []
-    for j in range(r*c): self.state.append(j)
-    shuffle(self.state)
+    self.state = [2,0,7,1,5,6,4,8,3]
+    #for j in range(r*c): self.state.append(j)
+    #shuffle(self.state)
     
     # these shifts of .state indices effect moves of the blank:
     self.LF, self.RT, self.UP, self.DN = -1, 1, -self.cols, self.cols
@@ -97,6 +98,7 @@ def get_command():
 def play():
   r,c = get_dimensions()
   st = Tile(r,c)
+  st.state = [2,0,7,1,5,6,4,8,3]
   st.showpretty()
   while True:
     ndx0 = st.state.index(min(st.state)) # index of 0
